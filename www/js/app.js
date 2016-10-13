@@ -22,6 +22,38 @@ angular.module('starter', ['ionic', 'ui-leaflet'])
     }
   });
 })
-.controller("mapController", function($scope){
+.controller("mapController", function($scope, $http, leafletData){
+
+  angular.extend($scope, {
+            areas_sig: {
+                lat: 0.0333,
+                lng: -51.05,
+                zoom: 7
+            },
+            defaults: {
+                scrollWheelZoom: false
+            }
+        });
+
+ $http.get('data/areas_sig.geojson.bkp').success(function(geojson){
+    angular.extend($scope, {
+        geojson: {
+            data: geojson,
+            style: {
+                fillColor: "green",
+                weight: 2,
+                opacity: 1,
+                color: 'white',
+                dashArray: '3',
+                fillOpacity: 0.7
+            }
+        }
+    });
+  }).catch(function(err){
+    console.log("Erro ao carregar geojson");
+  });
+ 
+
+
 
 })
